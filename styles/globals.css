@@ -14,3 +14,38 @@ a {
 * {
   box-sizing: border-box;
 }
+.manu-box{
+  background-color: aqua;
+  position: relative;
+  display: inline-block;
+  transition: 200ms;
+}
+.manu{
+ opacity: 0;
+  width: 200px;
+  position: absolute;
+  
+  z-index: 1;
+}
+.manu.active{
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.manu-box:hover .manu {
+ display: block;
+ background-color: coral;
+ 
+}
+
+.manu-box .manu a:hover{
+   background-color: chartreuse;
+ 
+}
+
+.manu-box .manu a{
+  display: block;
+  cursor: pointer;
+  padding: 10px 20px;
+}
