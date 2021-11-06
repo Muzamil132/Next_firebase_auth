@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { app } from '../firebase'
 import cookie from 'cookie'
 import {useRouter} from 'next/router'
-import { Input, Space, Row, Col, Button, Layout,Modal } from 'antd'
+import { Input, Space, Row, Col, Button, Layout } from 'antd'
 // import { redirect } from 'next/dist/server/api-utils'
 
 const Login = () => {
@@ -19,7 +19,7 @@ const Login = () => {
         try {
             setLoading(true)
              const URL="http://localhost:3000"
-            const res = await fetch(`${URL}/api/auth/login/login`, {
+            const res = await fetch(`${URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,32 +27,18 @@ const Login = () => {
                 body: JSON.stringify({ email, password })
 
             })
-
-            console.log(res.ok)
-          if(!res.ok){
-            
-            setLoading(false)
-            const data =await res.json()
-            Modal.error({
-                title: 'This is an error message',
-                content: data.error.code,
-              });
-
-           
+           const data =await res.json()
             console.log(data)
-                 }
-                 else{
 
-                    const data =await res.json()
-                console.log(data)
+
+            if(data){
                 router.push('/')
                 setLoading(false)
-                   
-                 }
+            }
         }
 
         catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
 
 
@@ -86,11 +72,11 @@ export default Login
 export const getServerSideProps =async({req})=>{
 
 
-  const cookies=  cookie.parse(req ? req.headers.cookie || '' : '')
+  const token=  cookie.parse(req ? req.headers.cookie || '' : '')
 
 
 
-  if(cookies.token){
+  if(token.token){
     return  {
 
         redirect:{
@@ -113,4 +99,3 @@ export const getServerSideProps =async({req})=>{
 
 
 }
-
