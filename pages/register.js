@@ -18,7 +18,7 @@ const Login = () => {
 
         try {
             setLoading(true)
-             const URL="http://localhost:3000"
+             const URL="https://vercel.com/muzamil132/next-firebase-auth"
             const res = await fetch(`${URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
