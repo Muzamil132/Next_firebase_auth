@@ -18,7 +18,7 @@ const Login = () => {
 
         try {
             setLoading(true)
-             const URL="https://vercel.com/muzamil132/next-firebase-auth1"
+             const URL="https://next-firebase-auth1-39pof628g-muzamil132.vercel.app/"
             const res = await fetch(`${URL}/api/auth/login/login`, {
                 method: "POST",
                 headers: {
