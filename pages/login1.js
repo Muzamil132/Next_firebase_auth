@@ -21,6 +21,7 @@ const Login = () => {
              const URL="https://next-firebase-auth1-39pof628g-muzamil132.vercel.app"
             const res = await fetch(`${URL}/api/auth/login/login`, {
                 method: "POST",
+                mode: "no-cors",
                 headers: {
                     'Content-Type': 'application/json'
                 },
