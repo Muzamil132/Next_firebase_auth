@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { app } from '../firebase'
+import axios from 'axios'
 import cookie from 'cookie'
-import {useRouter} from 'next/router'
-import { Input, Space, Row, Col, Button, Layout } from 'antd'
+import { useRouter } from 'next/router'
+import { Input, Space, Row, Col, Button, Layout, Modal } from 'antd'
 // import { redirect } from 'next/dist/server/api-utils'
 
 const Login = () => {
-    const router =useRouter()
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState("")
 
-    const [loading,setLoading]=useState(false)
+    const [loading, setLoading] = useState(false)
     const handleSubmit = async (e) => {
 
         e.preventDefault()
@@ -18,28 +19,28 @@ const Login = () => {
 
         try {
             setLoading(true)
-             const URL="https://next-firebase-auth1-39pof628g-muzamil132.vercel.app"
-            const res = await fetch(`${URL}/api/auth/login`, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
+            const URL = "https://next-firebase-auth1-39pof628g-muzamil132.vercel.app"
+            const LOCAL_URL = "http://localhost:3000"
 
-            })
-           const data =await res.json()
-            console.log(data)
-
-
-            if(data){
+            const data = await axios.post(`${URL}/api/auth/login`, { email, password })
+            if (data) {
                 router.push('/')
                 setLoading(false)
+
             }
+
+
+
         }
 
         catch (error) {
-            console.log(error.message)
+            console.log(error.response)
+            setLoading(false)
+
+            Modal.error({
+                title: "Error",
+                content: error.response.data.error.code
+            })
         }
 
 
@@ -56,7 +57,7 @@ const Login = () => {
                             <Input value={email} onChange={e => setEmail(e.target.value)} size="large" shape="rounded" placeholder="email" />
 
                             <Input value={password} onChange={e => setPassword(e.target.value)} size="large" placeholder="password" />
-                            <Button  loading={loading} onClick={handleSubmit} type="primary" size="large" block  >Login</Button>
+                            <Button loading={loading} onClick={handleSubmit} type="primary" size="large" block  >Login</Button>
                         </form>
                     </Space>
                 </Col>
@@ -70,32 +71,32 @@ const Login = () => {
 export default Login
 
 
-export const getServerSideProps =async({req})=>{
+export const getServerSideProps = async ({ req }) => {
 
 
-  const token=  cookie.parse(req ? req.headers.cookie || '' : '')
+    const token = cookie.parse(req ? req.headers.cookie || '' : '')
 
 
 
-  if(token.token){
-    return  {
+    if (token.token) {
+        return {
 
-        redirect:{
-            destination:"/"
-            ,permanent:false
+            redirect: {
+                destination: "/"
+                , permanent: false
+            }
         }
     }
-  }
-  
 
 
 
 
-  return {
-      props:{
-          
-      }
-  }
+
+    return {
+        props: {
+
+        }
+    }
 
 
 

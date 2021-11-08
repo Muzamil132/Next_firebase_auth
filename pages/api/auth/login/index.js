@@ -26,11 +26,11 @@ handler.post(async(req,res)=>{
       )
 
 
-    res.json({user:ress.user})
+    res.status(200).json({user:ress.user})
 
      }
      catch(error){
-          res.json( {msg:  error.customData._tokenResponse.error.message})
+          res.status(400).json( {error})
      }
 
 

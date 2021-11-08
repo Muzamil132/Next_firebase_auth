@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { app } from '../firebase'
 import cookie from 'cookie'
+import axios from 'axios'
 import {useRouter} from 'next/router'
 import { Input, Space, Row, Col, Button, Layout,Modal } from 'antd'
 // import { redirect } from 'next/dist/server/api-utils'
@@ -15,45 +16,35 @@ const Login = () => {
 
         e.preventDefault()
         console.log(email, password)
-
         try {
             setLoading(true)
-             const URL="https://next-firebase-auth1-39pof628g-muzamil132.vercel.app"
-            const res = await fetch(`${URL}/api/auth/login/login`, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
+            const URL = "https://next-firebase-auth1-39pof628g-muzamil132.vercel.app"
+            const LOCAL_URL = "http://localhost:3000"
 
-            })
-
-            console.log(res.ok)
-          if(!res.ok){
-            
-            setLoading(false)
-            const data =await res.json()
-            Modal.error({
-                title: 'This is an error message',
-                content: data.error.code,
-              });
-
-           
-            console.log(data)
-                 }
-                 else{
-
-                    const data =await res.json()
-                console.log(data)
+            const data = await axios.post(`${URL}/api/auth/login/login`, { email, password })
+            if (data) {
                 router.push('/')
                 setLoading(false)
-                   
-                 }
+
+            }
+
+
+
         }
 
         catch (error) {
-            console.log(error)
+            if(error){
+                console.log(error)
+                setLoading(false)
+    
+                Modal.error({
+                    title: "Error",
+                    content: error?.response.data.error.code
+                })
+
+
+            }
+           
         }
 
 
