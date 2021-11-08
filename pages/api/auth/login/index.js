@@ -15,7 +15,8 @@ handler.post(async(req,res)=>{
     const ress = await  createUserWithEmailAndPassword(auth,email,password)
     console.log(ress)
     res.setHeader(
-        'Set-Cookie',
+        'Set-Cookie',"Access-Control-Allow-Origin", "*",
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization",
         cookie.serialize('token', ress.user.stsTokenManager.accessToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== 'development',

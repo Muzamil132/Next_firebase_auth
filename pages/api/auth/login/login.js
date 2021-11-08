@@ -14,7 +14,15 @@ handler.post(async(req,res)=>{
       
     const ress = await  signInWithEmailAndPassword(auth,email,password)
     console.log(ress)
+
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+   
+    res.setHeader(
+        
         'Set-Cookie',
         cookie.serialize('token', ress.user.stsTokenManager.accessToken, {
           httpOnly: true,

@@ -19,7 +19,7 @@ const Login = () => {
 
         try {
             setLoading(true)
-            const URL = "https://next-firebase-auth1-39pof628g-muzamil132.vercel.app"
+            const URL = "https://next-firebase-auth2-39pof628g-muzamil132.vercel.app"
             const LOCAL_URL = "http://localhost:3000"
 
             const data = await axios.post(`${URL}/api/auth/login`, { email, password })
