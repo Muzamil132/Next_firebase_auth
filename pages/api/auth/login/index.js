@@ -18,7 +18,7 @@ handler.post(async (req, res) => {
     console.log(ress);
     res.setHeader(
       "Set-Cookie",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+
       cookie.serialize("token", ress.user.stsTokenManager.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== "development",
