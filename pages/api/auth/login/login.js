@@ -18,7 +18,10 @@ handler.post(async (req, res) => {
     console.log(ress);
 
     res.setHeader(
+      "Access-Control-Allow-Origin",
+      "*",
       "Set-Cookie",
+
       cookie.serialize("token", ress.user.stsTokenManager.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== "development",
@@ -34,4 +37,4 @@ handler.post(async (req, res) => {
   }
 });
 
-export default cors(handler);
+export default handler;

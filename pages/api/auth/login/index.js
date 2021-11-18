@@ -17,6 +17,8 @@ handler.post(async (req, res) => {
     const ress = await createUserWithEmailAndPassword(auth, email, password);
     console.log(ress);
     res.setHeader(
+      "Access-Control-Allow-Origin",
+      "*",
       "Set-Cookie",
 
       cookie.serialize("token", ress.user.stsTokenManager.accessToken, {
@@ -34,4 +36,4 @@ handler.post(async (req, res) => {
   }
 });
 
-export default cors(handler);
+export default handler;
